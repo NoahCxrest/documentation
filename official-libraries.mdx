@@ -1,0 +1,115 @@
+---
+title: "Official Libraries"
+description: "Official Melonly API client libraries for Node.js and Python"
+---
+
+## Overview
+
+Melonly provides official, production-ready client libraries for both Node.js and Python to streamline integration with the Melonly API. These libraries handle authentication, request formatting, and error handling, allowing you to focus on your application logic.
+
+<Info>
+**No support is provided for these libraries.**
+Refer to the documentation and examples in each package for implementation details.
+</Info>
+
+---
+
+## Available Libraries
+
+<CardGroup cols={2}>
+  <Card
+    title="Node.js / TypeScript"
+    icon="box"
+    href="https://www.npmjs.com/package/@melonly-moderation/api-client"
+  >
+    <b>Package:</b> <code>@melonly-moderation/api-client</code><br/>
+    <b>Platform:</b> Node.js (CommonJS & ESM), TypeScript support<br/>
+    <b>Maintainer:</b> Melonly Team
+  </Card>
+  <Card
+    title="Python"
+    icon="python"
+    href="https://pypi.org/project/melonly-api/1.0.0/"
+  >
+    <b>Package:</b> <code>melonly-api</code><br/>
+    <b>Platform:</b> Python 3.7+<br/>
+    <b>Maintainer:</b> Melonly Team
+  </Card>
+</CardGroup>
+
+---
+
+## Installation
+
+<Tabs>
+  <Tab title="Node.js">
+    Install via npm:
+    
+    ```bash
+    npm install @melonly-moderation/api-client
+    ```
+    
+    Or with yarn:
+    
+    ```bash
+    yarn add @melonly-moderation/api-client
+    ```
+  </Tab>
+  <Tab title="Python">
+    Install via pip:
+    
+    ```bash
+    pip install melonly-api==1.0.0
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card
+    title="Authentication"
+    icon="key"
+  >
+    Built-in support for Bearer token authentication. Pass your API token securely to all requests.
+  </Card>
+  <Card
+    title="Error Handling"
+    icon="alert-triangle"
+  >
+    Consistent error objects and status code handling, matching Melonly API conventions.
+  </Card>
+  <Card
+    title="Pagination & Rate Limits"
+    icon="repeat"
+  >
+    Automatic handling of paginated endpoints and rate limit headers.
+  </Card>
+  <Card
+    title="Type Safety (Node.js)"
+    icon="type"
+  >
+    Full TypeScript support with types for all endpoints and responses.
+  </Card>
+</CardGroup>
+
+---
+
+## Usage Notes
+
+- Refer to the [Quickstart](/quickstart) for API token generation and authentication basics.
+- All requests are subject to [rate limits](/rate-limits). The libraries surface rate limit headers and 429 errors for you to handle.
+- For endpoint details, required parameters, and response schemas, see the [API Reference](/api-reference).
+- Each library includes its own usage examples and advanced documentation—see the respective package pages for details.
+
+<Warning>
+Always keep your API tokens secure. Never commit them to version control or expose them in client-side code.
+</Warning>
+
+---
+
+## Support & Contributions
+
+These libraries are provided as-is, with no official support or guarantee of updates. For issues or feature requests, use the issue tracker on the respective package repository if available.
