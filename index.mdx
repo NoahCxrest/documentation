@@ -1,97 +1,175 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Melonly API"
+description: "Production REST API for ROBLOX server management automation"
 ---
 
-## Setting up
+## Overview
 
-Get your documentation site up and running in minutes.
+The Melonly API provides programmatic access to Roblox server management infrastructure. Purpose-built for developers creating automated workflows and integration systems.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+<Info>**Self-service documentation only** - No technical support provided</Info>
 
-## Make it yours
+<Warning>
+Designed for experienced developers familiar with REST APIs, authentication workflows, and production system integration. Review all documentation thoroughly before implementation.
+</Warning>
 
-Design a docs site that looks great and empowers your users.
+---
 
-<Columns cols={2}>
+## Core Capabilities
+
+<CardGroup cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Server Management"
+    icon="server"
   >
-    Edit your docs locally and preview them in real time.
+    Access server configuration, roles, and administrative metadata
   </Card>
+  
   <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
+    title="Application Processing"
+    icon="clipboard-check"
   >
-    Customize the design and colors of your site to match your brand.
+    Retrieve applications, responses, and manage approval workflows
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
+  
   <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
+    title="Member Operations"
+    icon="users"
   >
-    Auto-generate API documentation from OpenAPI specifications.
+    Query member data, roles, and Discord account linkage
   </Card>
-</Columns>
+  
+  <Card
+    title="Audit & Logging"
+    icon="shield-check"
+  >
+    Comprehensive logging, moderation records, and system events
+  </Card>
+  
+  <Card
+    title="Operational Data"
+    icon="calendar"
+  >
+    LOA requests, shift tracking, and join request management
+  </Card>
+  
+  <Card
+    title="And Much More"
+    icon="bolt"
+  >
+    There are so many more endpoints to explore!
+  </Card>
+</CardGroup>
 
-## Create beautiful pages
+---
 
-Everything you need to create world-class documentation.
+## Technical Foundation
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+<Tabs>
+  <Tab title="Authentication">
+    **Bearer Token Required**
+    
+    All endpoints require authentication via Authorization header:
+    
+    ```http
+    Authorization: Bearer {your_api_token}
+    ```
+    
+    Tokens are scoped to individual servers and inherit creator permissions.
+  </Tab>
+  
+  <Tab title="Data Format">
+    **Standardized JSON Responses**
+    
+    - **Timestamps:** Unix epoch integers
+    - **IDs:** Internal string identifiers (not Discord IDs)
+    - **Pagination:** `page`/`limit` query parameters
+    - **Errors:** Consistent HTTP status codes with JSON error objects
+  </Tab>
+  
+  <Tab title="Rate Limits">
+    **Production-Ready Throttling**
+    
+    - **Non-Premium:** 100 requests per month per server
+    - **Premium:** Unlimited requests per month per token
+    - **Headers:** `X-RateLimit-*` headers included in responses
+    - **429 Status:** Returned when limits exceeded
+  </Tab>
+</Tabs>
 
-## Need inspiration?
+---
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+## Implementation Workflow
+
+<Steps>
+  <Step title="Generate API Token">
+    Create your server API token through the Melonly dashboard Panel settings.
+  </Step>
+  
+  <Step title="Review Documentation">
+    Study endpoint specifications, required parameters, and response schemas.
+  </Step>
+  
+  <Step title="Implement Error Handling">
+    Build robust error handling for all HTTP status codes and rate limits.
+  </Step>
+  
+  <Step title="Test Integration">
+    Validate your implementation against development endpoints before production.
+  </Step>
+</Steps>
+
+---
+
+## Quick Reference
+
+<AccordionGroup>
+  <Accordion title="Base URL & Versioning">
+    **Production:** `https://api.melonly.xyz/api/v1`
+    
+    API versioning follows semantic versioning principles. Breaking changes will increment the major version number.
+  </Accordion>
+  
+  <Accordion title="Common Status Codes">
+    - `200` - Success with response body
+    - `400` - Bad Request (invalid parameters)
+    - `401` - Unauthorized (missing/invalid token)
+    - `404` - Not Found (resource doesn't exist)
+    - `429` - Rate Limited (too many requests)
+    - `500` - Internal Server Error
+  </Accordion>
+  
+  <Accordion title="Pagination Structure">
+    ```json
+    {
+      "data": [...],
+      "page": 1,
+      "pageSize": 10,
+      "total": 150,
+      "totalPages": 15
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Get Started
+
+<CardGroup cols={2}>
+  <Card
+    title="Quick Start Guide"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Generate your first API token and make a test request in minutes.
+  </Card>
+  
+  <Card
+    title="API Reference"
+    icon="book-open"
+    href="/api-reference"
+  >
+    Complete endpoint documentation with schemas and examples.
+  </Card>
+</CardGroup>

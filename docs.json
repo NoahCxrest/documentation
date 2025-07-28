@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "Mint Starter Kit",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#13da82",
+    "light": "#ff3662",
+    "dark": "#ff3662"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -15,35 +15,7 @@
         "groups": [
           {
             "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
+            "pages": ["index", "quickstart", "authentication", "rate-limits", "security"]
           }
         ]
       },
@@ -51,19 +23,70 @@
         "tab": "API reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Application Endpoints",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/endpoint/get-server-applications",
+              "api-reference/endpoint/get-application-by-id",
+              "api-reference/endpoint/get-application-responses",
+              "api-reference/endpoint/get-user-application-responses"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Join Request Endpoints",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/endpoint/get-server-join-requests",
+              "api-reference/endpoint/get-join-request-by-user-id"
             ]
+          },
+          {
+            "group": "LOA Endpoints",
+            "pages": [
+              "api-reference/endpoint/get-loa-by-id",
+              "api-reference/endpoint/get-server-loas",
+              "api-reference/endpoint/get-user-loas"
+            ]
+          },
+          {
+            "group": "Log Endpoints",
+            "pages": [
+              "api-reference/endpoint/get-log-by-id",
+              "api-reference/endpoint/get-server-audit-logs",
+              "api-reference/endpoint/get-server-logs",
+              "api-reference/endpoint/get-staff-logs",
+              "api-reference/endpoint/get-user-logs"
+            ]
+          },
+          {
+            "group": "Member Endpoints",
+            "pages": [
+              "api-reference/endpoint/get-member-by-discord-id",
+              "api-reference/endpoint/get-member-by-id",
+              "api-reference/endpoint/get-server-members"
+            ]
+          },
+          {
+            "group": "Role Endpoints",
+            "pages": [
+              "api-reference/endpoint/get-role-by-id",
+              "api-reference/endpoint/get-server-roles"
+            ]
+          },
+          {
+            "group": "Server Endpoints",
+            "pages": [
+              "api-reference/endpoint/get-server-applications",
+              "api-reference/endpoint/get-server-info",
+              "api-reference/endpoint/get-server-join-requests",
+              "api-reference/endpoint/get-server-shifts"
+            ]
+          },
+          {
+            "group": "Shift Endpoints",
+            "pages": ["api-reference/endpoint/get-shift-by-id"]
+          },
+          {
+            "group": "User Endpoints",
+            "pages": ["api-reference/endpoint/get-user-application-responses"]
           }
         ]
       }
@@ -71,26 +94,26 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Website",
+          "href": "https://melonly.xyz",
+          "icon": "globe"
         },
         {
           "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "href": "https://discord.gg/qFdjnaTNRV",
+          "icon": "discord"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "OpenAPI Documentation",
+          "href": "https://api.melonly.xyz/swagger",
+          "icon": "code"
         }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/logo.png",
+    "dark": "/logo/logo.png"
   },
   "navbar": {
     "links": [

@@ -1,0 +1,1595 @@
+openapi: 3.0.0
+info:
+  contact: {}
+  description: Melonlys Public API
+  termsOfService: http://melonly.xyz/terms
+  title: Melonly API
+  version: "1.0"
+paths:
+  /server/applications:
+    get:
+      description: Get paginated list of applications for a server. Requires authentication.
+      responses:
+        "200":
+          description: successfully retrieved paginated applications
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ApplicationListResponse"
+        "400":
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get server applications
+      tags:
+        - applications
+  "/server/applications/{applicationId}":
+    get:
+      description: Get a specific application by application ID. Requires authentication.
+      parameters:
+        - description: Application ID
+          example: '"app123"'
+          in: path
+          name: applicationId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successfully retrieved application details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ApplicationAPIResponse"
+        "400":
+          description: invalid application id parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "404":
+          description: application not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.NotFoundResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get a specific application
+      tags:
+        - applications
+  "/server/applications/{applicationId}/responses":
+    get:
+      description: Get paginated list of responses for a specific application.
+        Requires authentication.
+      parameters:
+        - description: Application ID
+          example: '"app123"'
+          in: path
+          name: applicationId
+          required: true
+          schema:
+            type: string
+        - description: Page number
+          in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - description: Items per page
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        "200":
+          description: successfully retrieved paginated application responses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ApplicationResponseListResponse"
+        "400":
+          description: invalid application id parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get application responses
+      tags:
+        - applications
+  "/server/applications/user/{userId}/responses":
+    get:
+      description: Get paginated list of application responses for a specific user.
+        Requires authentication.
+      parameters:
+        - description: User ID
+          example: '"user123"'
+          in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successfully retrieved paginated user application responses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ApplicationResponseListResponse"
+        "400":
+          description: invalid user id parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get user application responses
+      tags:
+        - applications
+  /server/audit-logs:
+    get:
+      description: Get paginated list of audit logs for the current server
+      responses:
+        "200":
+          description: successfully retrieved paginated audit logs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.AuditLogListResponse"
+        "400":
+          description: invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get server audit logs
+      tags:
+        - audit-logs
+  /server/info:
+    get:
+      description: Returns detailed information about the current server
+      responses:
+        "200":
+          description: server information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ServerAPIResponse"
+        "400":
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "404":
+          description: server not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.NotFoundResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get server information
+      tags:
+        - Server
+  /server/join-requests:
+    get:
+      description: Get paginated list of join requests for a server. Requires
+        authentication.
+      parameters:
+        - description: Page number
+          in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - description: Items per page
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        "200":
+          description: successfully retrieved paginated join requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.JoinRequestListResponse"
+        "400":
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get server join requests
+      tags:
+        - join-requests
+  "/server/join-requests/{userId}":
+    get:
+      description: Get a specific join request for a server by user ID. Requires
+        authentication.
+      parameters:
+        - description: User ID
+          example: '"user123"'
+          in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successfully retrieved join request details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.JoinRequestAPIResponse"
+        "400":
+          description: invalid user ID parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "404":
+          description: join request not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.NotFoundResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get a specific join request
+      tags:
+        - join-requests
+  /server/loas:
+    get:
+      description: Get paginated list of LOAs (Leave of Absence) for a server.
+      parameters:
+        - description: Page number
+          in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - description: Items per page
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        "200":
+          description: successfully retrieved paginated loas
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.LOAListResponse"
+        "400":
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get server LOAs
+      tags:
+        - loas
+  "/server/loas/{loaId}":
+    get:
+      description: Get a specific LOA (Leave of Absence) by LOA ID.
+      parameters:
+        - description: LOA ID
+          example: '"loa123"'
+          in: path
+          name: loaId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully retrieved LOA details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.LOAAPIResponse"
+        "400":
+          description: Invalid LOA ID parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "404":
+          description: LOA not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.NotFoundResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get a specific LOA
+      tags:
+        - loas
+  "/server/loas/user/{memberId}":
+    get:
+      description: Get paginated list of LOAs for a specific user.
+      parameters:
+        - description: Member ID
+          example: '"member123"'
+          in: path
+          name: memberId
+          required: true
+          schema:
+            type: string
+        - description: Page number
+          in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - description: Items per page
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        "200":
+          description: successfully retrieved paginated user LOAs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.LOAListResponse"
+        "400":
+          description: invalid member ID parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get user LOAs
+      tags:
+        - loas
+  /server/logs:
+    get:
+      description: Get paginated list of logs for a server. Requires authentication.
+      parameters:
+        - description: Page number
+          in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - description: Items per page
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        "200":
+          description: successfully retrieved paginated logs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.LogListResponse"
+        "400":
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get server logs
+      tags:
+        - logs
+  "/server/logs/{logId}":
+    get:
+      description: Get a specific log by log ID.
+      parameters:
+        - description: Log ID
+          example: '"log123"'
+          in: path
+          name: logId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully retrieved log details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.LogAPIResponse"
+        "400":
+          description: Invalid log ID parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: Missing or invalid authorization token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "404":
+          description: Log not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.NotFoundResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get a specific log
+      tags:
+        - logs
+  "/server/logs/staff/{staffId}":
+    get:
+      description: Get paginated list of logs created by a specific staff member.
+      parameters:
+        - description: Staff ID
+          example: '"staff123"'
+          in: path
+          name: staffId
+          required: true
+          schema:
+            type: string
+        - description: Page number
+          in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - description: Items per page
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        "200":
+          description: successfully retrieved paginated staff logs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.LogListResponse"
+        "400":
+          description: invalid staff ID parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: missing or invalid authorization token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get staff logs
+      tags:
+        - logs
+  "/server/logs/user/{username}":
+    get:
+      description: Get paginated list of logs for a specific user.
+      parameters:
+        - description: Username
+          example: '"john_doe"'
+          in: path
+          name: username
+          required: true
+          schema:
+            type: string
+        - description: Page number
+          in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - description: Items per page
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        "200":
+          description: successfully retrieved paginated user logs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.LogListResponse"
+        "400":
+          description: invalid username parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: missing or invalid authorization token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get user logs
+      tags:
+        - logs
+  /server/members:
+    get:
+      description: Get paginated list of members for a server. Requires Bearer token
+        authentication.
+      parameters:
+        - description: Page number
+          in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - description: Items per page
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        "200":
+          description: successfully retrieved paginated members
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.MemberListResponse"
+        "400":
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get server members
+      tags:
+        - members
+  "/server/members/{memberId}":
+    get:
+      description: Get a specific member by member ID. Requires Bearer token authentication.
+      parameters:
+        - description: Member ID
+          example: '"member123"'
+          in: path
+          name: memberId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successfully retrieved member details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.MemberAPIResponse"
+        "400":
+          description: invalid member id parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "404":
+          description: Member not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.NotFoundResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get a specific member
+      tags:
+        - members
+  "/server/members/discord/{discordId}":
+    get:
+      description: Get a specific member by Discord ID. Requires Bearer token
+        authentication.
+      parameters:
+        - description: Discord ID
+          example: '"123456789012345678"'
+          in: path
+          name: discordId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successfully retrieved member details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.MemberAPIResponse"
+        "400":
+          description: invalid discord id parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "404":
+          description: Member not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.NotFoundResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get a specific member by Discord ID
+      tags:
+        - members
+  /server/roles:
+    get:
+      description: Get paginated list of roles for a server. Requires authentication.
+      parameters:
+        - description: Page number
+          in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - description: Items per page
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        "200":
+          description: successfully retrieved paginated roles
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.RoleListResponse"
+        "400":
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get server roles
+      tags:
+        - roles
+  "/server/roles/{roleId}":
+    get:
+      description: Get a specific role by role ID. Requires authentication.
+      parameters:
+        - description: Role ID
+          example: '"role123"'
+          in: path
+          name: roleId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successfully retrieved role details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.RoleAPIResponse"
+        "400":
+          description: invalid role ID parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "404":
+          description: Role not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.NotFoundResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get a specific role
+      tags:
+        - roles
+  /server/shifts:
+    get:
+      description: Get paginated list of shifts for a server. Requires authentication.
+      parameters:
+        - description: Page number
+          in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - description: Items per page
+          in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        "200":
+          description: successfully retrieved paginated shifts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ShiftListResponse"
+        "400":
+          description: invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get server shifts
+      tags:
+        - shifts
+  "/server/shifts/{shiftId}":
+    get:
+      description: Get a specific shift for a server by shift ID. Requires authentication.
+      parameters:
+        - description: Shift ID
+          example: '"shift123"'
+          in: path
+          name: shiftId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successfully retrieved shift details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ShiftAPIResponse"
+        "400":
+          description: invalid shift ID parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.BadRequestResponse"
+        "401":
+          description: authentication required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.UnauthorizedResponse"
+        "404":
+          description: shift not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.NotFoundResponse"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.InternalServerErrorResponse"
+      security:
+        - BearerAuth: []
+      summary: Get a specific shift
+      tags:
+        - shifts
+servers:
+  - url: https://api.melonly.xyz/api/v1
+components:
+  securitySchemes:
+    BearerAuth:
+      description: Type "Bearer" followed by a space and the API token.
+      in: header
+      name: Authorization
+      type: apiKey
+  schemas:
+    models.ApplicationAPIResponse:
+      properties:
+        acceptanceRemoveRoles:
+          items:
+            type: string
+          type: array
+        acceptingResponses:
+          type: boolean
+        approvalRoles:
+          items:
+            type: string
+          type: array
+        banAppeal:
+          type: integer
+        banAppealNote:
+          type: boolean
+        bannerKey:
+          type: string
+        blockedDiscordRoles:
+          items:
+            type: string
+          type: array
+        closedMessage:
+          type: string
+        collectRobloxAccount:
+          type: boolean
+        color:
+          type: string
+        cooldown:
+          type: integer
+        createdAt:
+          type: integer
+        denialRemoveRoles:
+          items:
+            type: string
+          type: array
+        denialRoles:
+          items:
+            type: string
+          type: array
+        description:
+          type: string
+        eventsChannelId:
+          type: string
+        guildMemberAge:
+          type: integer
+        id:
+          type: string
+        inviteOnApproval:
+          type: boolean
+        lastUpdated:
+          type: integer
+        maxLogs:
+          type: integer
+        presets:
+          items:
+            type: object
+          type: array
+        questions:
+          type: object
+        requireApprovedReason:
+          type: boolean
+        requireDiscordMember:
+          type: boolean
+        requiredDenialReason:
+          type: boolean
+        requiredDiscordRoles:
+          items:
+            type: string
+          type: array
+        resultsChannelId:
+          type: string
+        resultsMentionUser:
+          type: boolean
+        revealReviewer:
+          type: boolean
+        reviewOnlyRoles:
+          items:
+            type: string
+          type: array
+        reviewerRoles:
+          items:
+            type: string
+          type: array
+        robloxGroupId:
+          type: string
+        sections:
+          items:
+            type: object
+          type: array
+        serverId:
+          type: string
+        stageResponses:
+          type: boolean
+        submissionMessage:
+          type: string
+        submitMentionRoles:
+          items:
+            type: string
+          type: array
+        title:
+          type: string
+      type: object
+    models.ApplicationListResponse:
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/models.ApplicationAPIResponse"
+          type: array
+        page:
+          example: 1
+          type: integer
+        pageSize:
+          example: 10
+          type: integer
+        total:
+          example: 100
+          type: integer
+        totalPages:
+          example: 10
+          type: integer
+      type: object
+    models.ApplicationResponseAPIResponse:
+      properties:
+        answers:
+          type: object
+        applicationId:
+          type: string
+        comments:
+          type: object
+        createdAt:
+          type: integer
+        finalizedAt:
+          type: integer
+        finalizedBy:
+          type: string
+        flagged:
+          type: object
+        id:
+          type: string
+        reason:
+          type: string
+        reviewedAt:
+          type: integer
+        reviewedBy:
+          type: string
+        robloxId:
+          type: string
+        stagingStatus:
+          type: integer
+        status:
+          type: integer
+        userId:
+          type: string
+      type: object
+    models.ApplicationResponseListResponse:
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/models.ApplicationResponseAPIResponse"
+          type: array
+        page:
+          example: 1
+          type: integer
+        pageSize:
+          example: 10
+          type: integer
+        total:
+          example: 100
+          type: integer
+        totalPages:
+          example: 10
+          type: integer
+      type: object
+    models.AuditLogEventAPIResponse:
+      properties:
+        applicationId:
+          type: string
+        description:
+          type: object
+        id:
+          type: string
+        serverId:
+          type: string
+        timestamp:
+          type: integer
+        type:
+          type: integer
+        userId:
+          type: string
+      type: object
+    models.AuditLogListResponse:
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/models.AuditLogEventAPIResponse"
+          type: array
+        page:
+          example: 1
+          type: integer
+        pageSize:
+          example: 10
+          type: integer
+        total:
+          example: 100
+          type: integer
+        totalPages:
+          example: 10
+          type: integer
+      type: object
+    models.BadRequestResponse:
+      properties:
+        error:
+          example: invalid request parameters
+          type: string
+      type: object
+    models.InternalServerErrorResponse:
+      properties:
+        error:
+          example: internal server error
+          type: string
+      type: object
+    models.JoinRequestAPIResponse:
+      properties:
+        createdAt:
+          example: 1625097600
+          type: integer
+        joinCode:
+          example: ABC123
+          type: string
+        serverId:
+          example: server456
+          type: string
+        userId:
+          example: user123
+          type: string
+      type: object
+    models.JoinRequestListResponse:
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/models.JoinRequestAPIResponse"
+          type: array
+        page:
+          example: 1
+          type: integer
+        pageSize:
+          example: 10
+          type: integer
+        total:
+          example: 100
+          type: integer
+        totalPages:
+          example: 10
+          type: integer
+      type: object
+    models.LOAAPIResponse:
+      properties:
+        cancelledAt:
+          type: integer
+        createdAt:
+          type: integer
+        denyReason:
+          type: string
+        endAt:
+          type: integer
+        endedAt:
+          type: integer
+        endedBy:
+          type: string
+        expiredAt:
+          type: integer
+        extensionRequests:
+          items:
+            type: object
+          type: array
+        id:
+          type: string
+        memberId:
+          type: string
+        reason:
+          type: string
+        reasonHistory:
+          items:
+            type: object
+          type: array
+        reviewedAt:
+          type: integer
+        reviewedBy:
+          type: string
+        serverId:
+          type: string
+        startAt:
+          type: integer
+        startType:
+          type: integer
+        startedAt:
+          type: integer
+        status:
+          type: integer
+      type: object
+    models.LOAListResponse:
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/models.LOAAPIResponse"
+          type: array
+        page:
+          example: 1
+          type: integer
+        pageSize:
+          example: 10
+          type: integer
+        total:
+          example: 100
+          type: integer
+        totalPages:
+          example: 10
+          type: integer
+      type: object
+    models.LogAPIResponse:
+      properties:
+        completedBy:
+          type: string
+        createdAt:
+          type: integer
+        createdBy:
+          type: string
+        description:
+          type: string
+        editedBy:
+          items:
+            type: object
+          type: array
+        expired:
+          type: boolean
+        expiredAt:
+          type: integer
+        expiredBy:
+          type: string
+        hidden:
+          type: boolean
+        hiddenBy:
+          type: string
+        id:
+          type: string
+        proof:
+          items:
+            type: object
+          type: array
+        robloxId:
+          type: string
+        serverId:
+          type: string
+        tempBan:
+          type: boolean
+        text:
+          type: string
+        type:
+          type: integer
+        typeId:
+          type: string
+        unbanAt:
+          type: integer
+        username:
+          type: string
+      type: object
+    models.LogListResponse:
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/models.LogAPIResponse"
+          type: array
+        page:
+          example: 1
+          type: integer
+        pageSize:
+          example: 10
+          type: integer
+        total:
+          example: 100
+          type: integer
+        totalPages:
+          example: 10
+          type: integer
+      type: object
+    models.MemberAPIResponse:
+      properties:
+        createdAt:
+          type: integer
+        id:
+          type: string
+        roles:
+          items:
+            type: string
+          type: array
+        serverId:
+          type: string
+      type: object
+    models.MemberListResponse:
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/models.MemberAPIResponse"
+          type: array
+        page:
+          example: 1
+          type: integer
+        pageSize:
+          example: 10
+          type: integer
+        total:
+          example: 100
+          type: integer
+        totalPages:
+          example: 10
+          type: integer
+      type: object
+    models.NotFoundResponse:
+      properties:
+        error:
+          example: the requested resource could not be found on this server
+          type: string
+      type: object
+    models.RoleAPIResponse:
+      properties:
+        colour:
+          type: string
+        createdAt:
+          type: integer
+        extraPermissions:
+          type: integer
+        id:
+          type: string
+        linkedDiscordRoleId:
+          type: string
+        name:
+          type: string
+        permissions:
+          type: string
+        serverId:
+          type: string
+      type: object
+    models.RoleListResponse:
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/models.RoleAPIResponse"
+          type: array
+        page:
+          example: 1
+          type: integer
+        pageSize:
+          example: 10
+          type: integer
+        total:
+          example: 100
+          type: integer
+        totalPages:
+          example: 10
+          type: integer
+      type: object
+    models.ServerAPIResponse:
+      properties:
+        createdAt:
+          type: integer
+        discordGuildId:
+          type: string
+        id:
+          type: string
+        joinCode:
+          type: string
+        name:
+          type: string
+        ownerId:
+          type: string
+        roles:
+          items:
+            type: object
+          type: array
+      type: object
+    models.ShiftAPIResponse:
+      properties:
+        autoEnd:
+          type: boolean
+        breakTimestamps:
+          items:
+            type: object
+          type: array
+        createdAt:
+          type: integer
+        endedAt:
+          type: integer
+        endedBy:
+          type: string
+        id:
+          type: string
+        memberId:
+          type: string
+        serverId:
+          type: string
+        type:
+          type: string
+        wave:
+          type: integer
+      type: object
+    models.ShiftListResponse:
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/models.ShiftAPIResponse"
+          type: array
+        page:
+          example: 1
+          type: integer
+        pageSize:
+          example: 10
+          type: integer
+        total:
+          example: 100
+          type: integer
+        totalPages:
+          example: 10
+          type: integer
+      type: object
+    models.UnauthorizedResponse:
+      properties:
+        error:
+          example: authorization header is required
+          type: string
+      type: object
